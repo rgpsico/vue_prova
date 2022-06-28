@@ -1,6 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-
+import Todos from '@/views/Todos/Todos.vue'
+import addTodo from '@/views/Todos/AddTodo.vue'
+import editTodo from '@/views/Todos/EditTodo.vue'
+import Cadastrar from '@/views/Todos/Cadastrar'
+import guard from '../services/middleware.js'
 const routes = [
   {
     path: '/',
@@ -8,12 +12,30 @@ const routes = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  path:'/todos',
+  name: 'todos.index',
+  component: Todos,
+  beforeEnter: guard.auth
+  },
+  {
+    path:'/todos/cadastrar',
+    name: 'todos.cadastrar',
+    component: Cadastrar,
+   
+    }
+  ,
+  {
+  path:'/todos/create',
+  name: 'todos.create',
+  component: addTodo,
+  beforeEnter: guard.auth
+  }
+  ,
+  {
+  path:'/todos/:id/edit',
+  name: 'todos.edit',
+  component: editTodo,
+  props:true
   }
 ]
 
